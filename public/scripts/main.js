@@ -84,6 +84,7 @@ function subscribeUser() {
   .then(function(subscription) {
     console.log('User is subscribed.');
 
+    uploadSubscribeUserData(subscription)
     updateSubscriptionOnServer(subscription);
 
     isSubscribed = true;
@@ -94,6 +95,11 @@ function subscribeUser() {
     console.log('Failed to subscribe the user: ', err);
     updateBtn();
   });
+}
+
+function uploadSubscribeUserData(subscription) {
+  console.log("upload subscription info", subscription)
+    firebase.database().ref().child("Users").push().set(JSON.parse(JSON.stringify(subscription)))
 }
 
 function unsubscribeUser() {
