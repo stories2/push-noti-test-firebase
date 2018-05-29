@@ -7,6 +7,11 @@ const express = require('express');
 const cors = require('cors')({origin: true});
 const app = express();
 
+const serverKey = {
+    publicKey: functions.config().server.public_key,
+    privateKey: functions.config().server.private_key
+}
+
 app.use(cors)
 
 app.get("/keyboard", function (request, response) {

@@ -206,3 +206,4 @@ typings/
 
 # End of https://www.gitignore.io/api/node,intellij,intellij+iml,intellij+all
 .idea/vcs.xml
+functions/.runtimeconfig.json
