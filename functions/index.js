@@ -11,7 +11,8 @@ app.use(cors)
 
 app.get("/keyboard", function (request, response) {
     responseMessage = {
-        "type" : "text"
+        "type" : "buttons",
+        "buttons" : ["Send Test Noti"]
     }
 
     // response.setHeader('Content-Type', 'application/json');
@@ -24,6 +25,10 @@ app.post("/message", function (request, response) {
     responseMessage = {
         "message": {
             "text": request.body["content"],
+        },
+        "keyboard": {
+            "type" : "buttons",
+            "buttons" : ["Send Test Noti"]
         }
     }
 
