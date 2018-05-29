@@ -6,11 +6,18 @@ admin.initializeApp(functions.config().firebase);
 const express = require('express');
 const cors = require('cors')({origin: true});
 const app = express();
+const webpush = require('web-push');
 
 const serverKey = {
     publicKey: functions.config().server.public_key,
     privateKey: functions.config().server.private_key
 }
+
+webpush.setVapidDetails(
+    'mailto:stories282@gmail.com',
+    serverKey["publicKey"],
+    serverKey["privateKey"]
+);
 
 app.use(cors)
 
@@ -25,6 +32,15 @@ app.get("/keyboard", function (request, response) {
 })
 
 app.post("/message", function (request, response) {
+
+
+    admin.database().ref('/Users/').once('value', function (snapshot) {
+        databaseSnapshot = snapshot.val()
+        for(key in databaseSnapshot) {
+            pushSubscriptionData = databaseSnapshot[key]
+            webpush.sendNotification(pushSubscriptionData, request.body["content"])
+        }
+    })
 
     console.log("/message-> user_key: " + request.body["user_key"])
     responseMessage = {
