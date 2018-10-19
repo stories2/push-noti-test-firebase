@@ -99,7 +99,7 @@ function subscribeUser() {
 
 function uploadSubscribeUserData(subscription) {
   console.log("upload subscription info", subscription)
-    firebase.database().ref().child("Users").push().set(JSON.parse(JSON.stringify(subscription)))
+    // firebase.database().ref().child("Users").push().set(JSON.parse(JSON.stringify(subscription)))
 }
 
 function unsubscribeUser() {
