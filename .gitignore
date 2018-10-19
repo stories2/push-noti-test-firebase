@@ -208,3 +208,4 @@ typings/
 .idea/vcs.xml
 functions/.runtimeconfig.json
 .runtimeconfig.json
+*.cache
