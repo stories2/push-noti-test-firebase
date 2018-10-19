@@ -32,19 +32,23 @@ app.get("/keyboard", function (request, response) {
 
 app.post("/message", function (request, response) {
 
+    sendMsg = {
+        msg: request.body["content"]
+    }
+    sendMsgStr = JSON.stringify(sendMsg)
 
-    admin.database().ref('/Users/').once('value', function (snapshot) {
+    admin.database().ref('/Subscriber/').once('value', function (snapshot) {
         databaseSnapshot = snapshot.val()
         for(key in databaseSnapshot) {
             pushSubscriptionData = databaseSnapshot[key]
-            webpush.sendNotification(pushSubscriptionData, request.body["content"])
+            webpush.sendNotification(pushSubscriptionData, sendMsgStr)
         }
     })
 
     console.log("/message-> user_key: " + request.body["user_key"])
     responseMessage = {
         "message": {
-            "text": request.body["content"],
+            "text": sendMsgStr,
         }
     }
 
