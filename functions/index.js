@@ -6,6 +6,7 @@ admin.initializeApp(functions.config().firebase);
 const express = require('express');
 const cors = require('cors')({origin: true});
 const app = express();
+const privateApp = express();
 const webpush = require('web-push');
 
 const serverKey = {
@@ -18,6 +19,26 @@ webpush.setVapidDetails(
     serverKey["publicKey"],
     serverKey["privateKey"]
 );
+
+/************************************************************
+ * For admin web service
+ ************************************************************/
+
+privateApp.use(cors)
+
+privateApp.post("/SendPush/:targetName", function (request, response) {
+    targetName = request.params.targetName
+})
+
+privateApp.post("/UpdateStatus/:targetName", function (request, response) {
+    targetName = request.params.targetName
+})
+
+exports.private = functions.https.onRequest(privateApp);
+
+/************************************************************
+ * For kakaotalk chat api service
+ ************************************************************/
 
 app.use(cors)
 
