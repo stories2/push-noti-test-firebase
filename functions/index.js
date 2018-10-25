@@ -41,6 +41,8 @@ privateApp.post("/SendPush", function (request, response) {
     var pushManager = require('./Core/PushManager');
     pushManager.SendPushMsg(admin, webpush, targetName, request.body)
 
+    responseMessage['success'] = true
+
     response.setHeader('Content-Type', 'application/json');
     response.status(200).send(JSON.stringify(responseMessage))
 })
@@ -56,6 +58,8 @@ privateApp.post("/UpdateStatus/:targetName", function (request, response) {
 
     global.logManager.PrintLogMessage("index", "UpdateStatus", "received data: " + JSON.stringify(request.body),
         global.defineManager.LOG_LEVEL_DEBUG)
+
+    responseMessage['success'] = true
 
     response.setHeader('Content-Type', 'application/json');
     response.status(200).send(JSON.stringify(responseMessage))
