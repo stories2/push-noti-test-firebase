@@ -31,17 +31,31 @@ privateApp.use(cors)
 
 privateApp.post("/SendPush/:targetName", function (request, response) {
     targetName = request.params.targetName
+    responseMessage = {
+        'success': false
+    }
 
     global.logManager.PrintLogMessage("index", "SendPush", "send push request accepted, to -> " + targetName,
         global.defineManager.LOG_LEVEL_DEBUG)
 
+    var pushManager = require('./Core/PushManager');
+    pushManager.SendPushMsg(webpush, targetName, request.body)
+
+    response.setHeader('Content-Type', 'application/json');
+    response.status(200).send(JSON.stringify(responseMessage))
 })
 
 privateApp.post("/UpdateStatus/:targetName", function (request, response) {
     targetName = request.params.targetName
+    responseMessage = {
+        'success': false
+    }
 
     global.logManager.PrintLogMessage("index", "UpdateStatus", "update status request accepted, from -> " + targetName,
         global.defineManager.LOG_LEVEL_DEBUG)
+
+    response.setHeader('Content-Type', 'application/json');
+    response.status(200).send(JSON.stringify(responseMessage))
 })
 
 exports.private = functions.https.onRequest(privateApp);
