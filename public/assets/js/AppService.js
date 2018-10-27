@@ -1,4 +1,15 @@
 app.service("ADCModuleService", function ($log, $http) {
+
+    var config = {
+        apiKey: "AIzaSyBUYrZc8LRnx9aCBfCdleV1H0PzQsOUBvk",
+        authDomain: "push-noti-test-400f1.firebaseapp.com",
+        databaseURL: "https://push-noti-test-400f1.firebaseio.com",
+        projectId: "push-noti-test-400f1",
+        storageBucket: "push-noti-test-400f1.appspot.com",
+        messagingSenderId: "50393355350"
+    };
+    firebase.initializeApp(config);
+
     var printLogMessage = function (className, methodName, message, logLevel) {
         var logDateTime = new Date().toISOString();
         var logMsg = "" + logDateTime + " ";
