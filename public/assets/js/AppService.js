@@ -1,4 +1,4 @@
-app.service("ADCModuleService", function ($log, $http) {
+app.service("ADSModuleService", function ($log, $http) {
 
     var config = {
         apiKey: "AIzaSyBUYrZc8LRnx9aCBfCdleV1H0PzQsOUBvk",

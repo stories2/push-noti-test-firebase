@@ -1,4 +1,4 @@
-var app = angular.module('ADCModule', ['ngCookies',
+var app = angular.module('ADSModule', ['ngCookies',
     'ngResource',
     'ngSanitize',
     'ngRoute',
