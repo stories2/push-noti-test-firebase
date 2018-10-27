@@ -15,13 +15,13 @@
         <div ng-layout="column">
 
             <div ng-layout="row">
-                <md-toolbar class="md-hue-2" >
+                <md-toolbar class="md-hue-2" ng-controller="ToolbarController">
                     <div class="md-toolbar-tools">
                         <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
                             <!--<md-icon md-svg-icon="img/icons/menu.svg"></md-icon>-->
                         </md-button>
 
-                        <h2 flex md-truncate></h2>
+                        <h2 flex md-truncate>{{ title }}</h2>
 
                         <md-button class="md-icon-button" aria-label="Favorite">
                             <!--<md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>-->
@@ -50,6 +50,10 @@
     <script src="./assets/lib/angular-sanitize.js"></script>
     <script src="./assets/lib/angular-touch.js"></script>
     <script src="./assets/lib/angular-material.min.js"></script>
+
     <script src="./assets/js/App.js"></script>
+    <script src="./assets/js/AppDefine.js"></script>
+    <script src="./assets/js/AppService.js"></script>
+    <script src="./assets/js/Controllers/Shared/ToolbarController.js"></script>
 </body>
 </html>
