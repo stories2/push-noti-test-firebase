@@ -9,23 +9,12 @@ var app = angular.module('ADSModule', ['ngCookies',
 app.config(function($routeProvider) {
     $routeProvider
         .when("/", {
-            templateUrl : "/static/partials/index.html",
-            controller : "indexController",
+            templateUrl : "templates/partials/login.html",
+            controller : "LoginController",
             cache: false,
             disableCache: true,
         })
-        .when("/chapel", {
-            templateUrl : "../static/partials/chapel/chapelReport.html",
-            // controller : "chapelReportController"
-            cache: false,
-            disableCache: true,
-        })
-        .when("/score", {
-            templateUrl : "../static/partials/student/scoreReport.html",
-            // controller : "chapelReportController"
-            cache: false,
-            disableCache: true,
-        }).otherwise({
+        .otherwise({
         redirectTo: '/',
         cache: false,
         disableCache: true,
