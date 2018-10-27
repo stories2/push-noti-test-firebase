@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="./assets/css/angular-csp.css">
     <link rel="stylesheet" href="./assets/css/angular-material.min.css">
+    <link rel="stylesheet" href="./assets/css/spinner.css">
 </head>
 <body>
 
@@ -33,6 +34,25 @@
                     </div>
                 </md-toolbar>
             </div>
+
+            <div id="spinnerView">
+                <div class="loading-background">
+
+                </div>
+                <div class="spinner">
+                    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                </div>
+                <div class="loading-text">
+                    잠시만요! <br>지금 아주 중요한 무언가가 돌아가고 있어요!
+                    <footer class="spinner-created-by">
+                        spinner created by https://loading.io/css/
+                    </footer>
+                </div>
+            </div>
+
+            <md-content flex style="height: calc(100% - 64px);" ng-view layout="column" layout-padding>
+
+            </md-content>
         </div>
     </div>
 
