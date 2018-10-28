@@ -1,4 +1,4 @@
-app.controller("DashboardController", function ($scope, $http, $mdToast, $mdSidenav, ADSModuleService) {
+app.controller("DashboardController", function ($scope, $http, $mdToast, $mdSidenav, $mdDialog, ADSModuleService) {
 
     $scope.deployClientStatusDic = {}
 
@@ -37,5 +37,42 @@ app.controller("DashboardController", function ($scope, $http, $mdToast, $mdSide
     
     $scope.onBtnDetailClicked = function (statusDetail) {
         ADSModuleService.printLogMessage("DashboardController", "onBtnDetailClicked", "show detail data: " + JSON.stringify(statusDetail), LOG_LEVEL_DEBUG)
+        ShowDetailDialog(statusDetail)
+    }
+
+    function ShowDetailDialog(statusDetail) {
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'templates/dialog/DeployStatusDetail.html',
+            parent: angular.element(document.body),
+            // targetEvent: ev,
+            clickOutsideToClose:true,
+            locals: {
+                'statusDetail': statusDetail
+            },
+            // fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        })
+            .then(function(answer) {
+                // $scope.status = 'You said the information was "' + answer + '".';
+            }, function() {
+                // $scope.status = 'You cancelled the dialog.';
+            });
+    }
+
+    function DialogController($scope, $mdDialog, statusDetail) {
+
+        $scope.statusDetailDic = statusDetail
+
+        $scope.hide = function() {
+            $mdDialog.hide();
+        };
+
+        $scope.cancel = function() {
+            $mdDialog.cancel();
+        };
+
+        $scope.answer = function(answer) {
+            $mdDialog.hide(answer);
+        };
     }
 });
