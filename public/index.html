@@ -18,7 +18,7 @@
 
             <div ng-layout="row">
                 <md-toolbar class="md-hue-2" ng-controller="ToolbarController" ng-init="listenAuthStateChanged()">
-                    <div class="md-toolbar-tools" ng-controller="LoginController">
+                    <div class="md-toolbar-tools" >
                         <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
                             <!--<md-icon md-svg-icon="img/icons/menu.svg"></md-icon>-->
                         </md-button>
@@ -28,12 +28,16 @@
                         <md-button class="md-icon-button" aria-label="Favorite">
                             <!--<md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>-->
                         </md-button>
-
-                        <md-button class="md-icon-button" aria-label="More">
-                            <!--<md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>-->
-                            <i ng-if="!isUserSignedIn" class="fas fa-user-times"></i>
-                            <i ng-if="isUserSignedIn" class="fas fa-user-shield"></i>
-                        </md-button>
+                        <div ng-controller="LoginController" ng-init="listenAuthStateChanged()">
+                            <md-button ng-if="isUserSignedIn" class="md-icon-button" aria-label="More">
+                                <!--<md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>-->
+                                <i class="fas fa-user-shield"></i>
+                            </md-button>
+                            <md-button ng-if="!isUserSignedIn" class="md-icon-button" aria-label="More">
+                                <!--<md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>-->
+                                <i class="fas fa-user-times"></i>
+                            </md-button>
+                        </div>
                     </div>
                 </md-toolbar>
             </div>
