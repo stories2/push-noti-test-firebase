@@ -18,9 +18,23 @@
                 </div>
             </md-content>
         </md-tab>
-        <md-tab label="Help">
-            <md-content class="md-padding">
-
+        <md-tab label="Help" >
+            <md-content class="md-padding" >
+                <div layout="row">
+                    <h2>상태코드</h2>
+                </div>
+                <div layout="row">
+                    <table flex>
+                        <tr>
+                            <th width="10%">코드</th>
+                            <th flex>설명</th>
+                        </tr>
+                        <tr ng-repeat="(statusCode, statusCodeDesc) in deployClientStatusCodeDic">
+                            <td>{{ statusCode }}</td>
+                            <td>{{ statusCodeDesc }}</td>
+                        </tr>
+                    </table>
+                </div>
             </md-content>
         </md-tab>
 

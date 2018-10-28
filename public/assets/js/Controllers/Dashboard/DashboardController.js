@@ -1,6 +1,7 @@
 app.controller("DashboardController", function ($scope, $http, $mdToast, $mdSidenav, $mdDialog, ADSModuleService) {
 
     $scope.deployClientStatusDic = {}
+    $scope.deployClientStatusCodeDic = {}
 
     ADSModuleService.printLogMessage("DashboardController", "DashboardController", "init", LOG_LEVEL_INFO);
 
@@ -10,14 +11,12 @@ app.controller("DashboardController", function ($scope, $http, $mdToast, $mdSide
                 // User is signed in.
                 ADSModuleService.printLogMessage("DashboardController", "listenAuthStateChanged", "user signed in: " + JSON.stringify(user), LOG_LEVEL_DEBUG)
                 LoadLatestDeployStatus()
-
+                LoadDeployStatusCode()
                 // ...
             } else {
                 // User is signed out.
                 // ...
                 ADSModuleService.printLogMessage("DashboardController", "listenAuthStateChanged", "user not signed in", LOG_LEVEL_WARN)
-
-                
             }
         });
     }
@@ -38,6 +37,19 @@ app.controller("DashboardController", function ($scope, $http, $mdToast, $mdSide
     $scope.onBtnDetailClicked = function (statusDetail) {
         ADSModuleService.printLogMessage("DashboardController", "onBtnDetailClicked", "show detail data: " + JSON.stringify(statusDetail), LOG_LEVEL_DEBUG)
         ShowDetailDialog(statusDetail)
+    }
+
+    function LoadDeployStatusCode() {
+        ADSModuleService.printLogMessage("DashboardController", "LoadDeployStatusCode", "load registered deploy status code", LOG_LEVEL_DEBUG)
+
+        firebase.database().ref(DB_PATH_DEPLOY_STATUS_CODE).once('value').then(function(snapshot) {
+
+            ADSModuleService.printLogMessage("DashboardController", "LoadDeployStatusCode", "status code dic: " + JSON.stringify(snapshot.val()), LOG_LEVEL_DEBUG)
+
+            $scope.$apply(function () {
+                $scope.deployClientStatusCodeDic = snapshot.val()
+            })
+        });
     }
 
     function ShowDetailDialog(statusDetail) {

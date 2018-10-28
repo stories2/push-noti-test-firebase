@@ -5,3 +5,4 @@ var LOG_LEVEL_WARN = 3;
 var LOG_LEVEL_ERROR = 4;
 
 var DB_PATH_DEPLOY_STATUS = '/DeployStatus/'
+var DB_PATH_DEPLOY_STATUS_CODE = '/DeployStatusCode'
