@@ -48,6 +48,11 @@ app.service("ADSModuleService", function ($log, $http) {
     var postReq = function (url, data, successFunc, failFunc, token) {
         printLogMessage("AutoDeployClientService", "postReq", "send data to url: " + url, LOG_LEVEL_INFO);
         // data["seconds"] = this.PreventCache()
+        if(token !== undefined) {
+            $http.defaults.headers.common['Authorization'] = token
+            printLogMessage("AutoDeployClientService", "postReq", "request with token", LOG_LEVEL_INFO)
+        }
+
         $http({
             method: "POST",
             dataType: 'json',
@@ -84,6 +89,11 @@ app.service("ADSModuleService", function ($log, $http) {
     var getReq = function (url, data, successFunc, failFunc, token) {
         printLogMessage("AutoDeployClientService", "getReq", "send data to url: " + url, LOG_LEVEL_INFO);
         // data["seconds"] = this.PreventCache()
+        if(token !== undefined) {
+            $http.defaults.headers.common['Authorization'] = token
+            printLogMessage("AutoDeployClientService", "getReq", "request with token", LOG_LEVEL_INFO)
+        }
+
         $http({
             type: "GET",
             dataType: 'json',
