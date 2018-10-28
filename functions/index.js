@@ -9,6 +9,7 @@ admin.initializeApp(functions.config().firebase);
 const express = require('express');
 const cors = require('cors')({origin: true});
 const app = express();
+const publicApp = express();
 const privateApp = express();
 const webpush = require('web-push');
 
@@ -22,6 +23,32 @@ webpush.setVapidDetails(
     serverKey["publicKey"],
     serverKey["privateKey"]
 );
+
+/************************************************************
+ * For client api
+ ************************************************************/
+
+publicApp.use(cors)
+
+publicApp.post("/UpdateStatus/:targetName", function (request, response) {
+    targetName = request.params.targetName
+    responseMessage = {
+        'success': false
+    }
+
+    global.logManager.PrintLogMessage("index", "UpdateStatus", "update status request accepted, from -> " + targetName,
+        global.defineManager.LOG_LEVEL_DEBUG)
+
+    global.logManager.PrintLogMessage("index", "UpdateStatus", "received data: " + JSON.stringify(request.body),
+        global.defineManager.LOG_LEVEL_DEBUG)
+
+    responseMessage['success'] = true
+
+    response.setHeader('Content-Type', 'application/json');
+    response.status(200).send(JSON.stringify(responseMessage))
+})
+
+exports.public = functions.https.onRequest(publicApp);
 
 /************************************************************
  * For admin web service
@@ -40,24 +67,6 @@ privateApp.post("/SendPush", function (request, response) {
 
     var pushManager = require('./Core/PushManager');
     pushManager.SendPushMsg(admin, webpush, targetName, request.body)
-
-    responseMessage['success'] = true
-
-    response.setHeader('Content-Type', 'application/json');
-    response.status(200).send(JSON.stringify(responseMessage))
-})
-
-privateApp.post("/UpdateStatus/:targetName", function (request, response) {
-    targetName = request.params.targetName
-    responseMessage = {
-        'success': false
-    }
-
-    global.logManager.PrintLogMessage("index", "UpdateStatus", "update status request accepted, from -> " + targetName,
-        global.defineManager.LOG_LEVEL_DEBUG)
-
-    global.logManager.PrintLogMessage("index", "UpdateStatus", "received data: " + JSON.stringify(request.body),
-        global.defineManager.LOG_LEVEL_DEBUG)
 
     responseMessage['success'] = true
 
