@@ -34,4 +34,8 @@ app.controller("DashboardController", function ($scope, $http, $mdToast, $mdSide
             })
         });
     }
+    
+    $scope.onBtnDetailClicked = function (statusDetail) {
+        ADSModuleService.printLogMessage("DashboardController", "onBtnDetailClicked", "show detail data: " + JSON.stringify(statusDetail), LOG_LEVEL_DEBUG)
+    }
 });

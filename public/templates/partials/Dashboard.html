@@ -11,7 +11,7 @@
                         <md-subheader class="md-no-sticky">Recently status list</md-subheader>
                         <md-list-item class="secondary-button-padding" ng-repeat="(statusIndex, status) in clientStatusList">
                             <p>< <span>{{ status.adcProcessStatus }}</span> > - <span>{{ status.adcPushMsg }}</span> --- {{ status.adcUpdateDateTime }}</p>
-                            <md-button class="md-secondary" >Detail</md-button>
+                            <md-button class="md-secondary" ng-click="onBtnDetailClicked(status)">Detail</md-button>
                         </md-list-item>
                         <md-divider ></md-divider>
                     </div>
