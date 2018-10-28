@@ -9,8 +9,8 @@ var app = angular.module('ADSModule', ['ngCookies',
 app.config(function($routeProvider) {
     $routeProvider
         .when("/", {
-            templateUrl : "templates/partials/login.html",
-            controller : "LoginController",
+            templateUrl : "templates/partials/Dashboard.html",
+            controller : "DashboardController",
             cache: false,
             disableCache: true,
         })
