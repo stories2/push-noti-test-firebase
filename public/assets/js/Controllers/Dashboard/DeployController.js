@@ -18,11 +18,34 @@ app.controller("DeployController", function ($scope, $http, $mdToast, $mdDialog,
             },
             // fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
         })
-            .then(function(answer) {
+            .then(function(requestData) {
                 // $scope.status = 'You said the information was "' + answer + '".';
+                ADSModuleService.printLogMessage("DeployController", "ShowDeployRequestDialog", "request: " + JSON.stringify(requestData), LOG_LEVEL_DEBUG)
+                if(requestData["readyForDeploy"]) {
+                    SendPushMsgRequest(requestData)
+                }
             }, function() {
                 // $scope.status = 'You cancelled the dialog.';
             });
+    }
+
+    function SendPushMsgRequest(requestData) {
+        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+            // Send token to your backend via HTTPS
+            // ...
+
+            ADSModuleService.postReq(URL_PUSH_MSG_SEND,
+                requestData,
+                function (successData) {
+                    ADSModuleService.printLogMessage("DeployController", "SendPushMsgRequest", "successfully request push msg: " + JSON.stringify(successData), LOG_LEVEL_DEBUG)
+                },
+                function (error) {
+                    ADSModuleService.printLogMessage("DeployController", "SendPushMsgRequest", "cannot request push msg: " + JSON.stringify(error), LOG_LEVEL_ERROR)
+                }, idToken)
+        }).catch(function(error) {
+            // Handle error
+            ADSModuleService.printLogMessage("DeployController", "SendPushMsgRequest", "cannot generate token: " + JSON.stringify(error), LOG_LEVEL_ERROR)
+        });
     }
 
     function DialogController($scope, $mdDialog) {
@@ -33,6 +56,7 @@ app.controller("DeployController", function ($scope, $http, $mdToast, $mdDialog,
 
         $scope.onInit = function() {
             ADSModuleService.printLogMessage("DialogController", "onInit", "init", LOG_LEVEL_INFO)
+            $scope.deployRequest["readyForDeploy"] = false
             GetDeployProfileList()
             GetOrderTypeList()
         }
@@ -46,12 +70,14 @@ app.controller("DeployController", function ($scope, $http, $mdToast, $mdDialog,
         };
 
         $scope.answer = function(answer) {
-            $scope.deployRequest["callbackUrl"] = URL_CALLBACK + $scope.deployRequest.pushRegisteredID
-            $scope.deployRequest["fileType"] = "zip"
+            if(answer == FORM_OK) {
+                $scope.deployRequest["callbackUrl"] = URL_CALLBACK + $scope.deployRequest.pushRegisteredID
+                $scope.deployRequest["fileType"] = "zip"
+                $scope.deployRequest["readyForDeploy"] = true
 
-            ADSModuleService.printLogMessage("DialogController", "answer", "deploy request data: " + JSON.stringify($scope.deployRequest), LOG_LEVEL_DEBUG)
-
-            $mdDialog.hide(answer);
+                ADSModuleService.printLogMessage("DialogController", "answer", "deploy request data: " + JSON.stringify($scope.deployRequest), LOG_LEVEL_DEBUG)
+            }
+            $mdDialog.hide($scope.deployRequest);
         };
 
         function GetDeployProfileList() {

@@ -10,3 +10,8 @@ var DB_PATH_DEPLOY_PROFILE = '/DeployProfile'
 var DB_PATH_DEPLOY_ORDER_TYPE = '/OrderType'
 
 var URL_CALLBACK = 'https://us-central1-push-noti-test-400f1.cloudfunctions.net/public/UpdateStatus/'
+var URL_PUSH_MSG_SEND = 'https://us-central1-push-noti-test-400f1.cloudfunctions.net/private/SendPush'
+
+var FORM_OK = 'ok'
+var FORM_CANCEL = 'cancel'
+
