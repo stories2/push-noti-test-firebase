@@ -69,7 +69,7 @@ app.controller("DashboardController", function ($scope, $http, $mdToast, $mdSide
             ADSModuleService.printLogMessage("DashboardController", "CheckAllDeployStatus", "snapshot: " + JSON.stringify(snapshot.val()), LOG_LEVEL_DEBUG)
             for(serverName in snapshot.val()) {
 
-                requestData = {
+                const requestData = {
                     "orderType": 2,
                     "msg": "Check all deploy status",
                     "callbackUrl": URL_CALLBACK + serverName,
