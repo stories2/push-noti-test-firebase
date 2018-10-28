@@ -3,19 +3,14 @@
         <md-tab label="Deploy status">
             <md-content class="md-padding" layout="column">
 
-                <div layout="row" ng-repeat="(clientName, client) in deployClientStatusDic">
+                <div layout="row" ng-repeat="(clientName, clientStatusList) in deployClientStatusDic">
                     <div flex>
                         <md-list-item class="secondary-button-padding">
                             <p>{{ clientName }}</p>
-                            <md-button class="md-secondary" >Execute</md-button>
                         </md-list-item>
                         <md-subheader class="md-no-sticky">Recently status list</md-subheader>
-                        <md-list-item class="secondary-button-padding">
-                            <span>#ORDER NUMBER</span><span>ORDER STATUS</span>
-                            <md-button class="md-secondary" >Detail</md-button>
-                        </md-list-item>
-                        <md-list-item class="secondary-button-padding">
-                            <span>#ORDER NUMBER</span><span>ORDER STATUS</span>
+                        <md-list-item class="secondary-button-padding" ng-repeat="(statusIndex, status) in clientStatusList">
+                            <p>< <span>{{ status.adcProcessStatus }}</span> > - <span>{{ status.adcPushMsg }}</span> --- {{ status.adcUpdateDateTime }}</p>
                             <md-button class="md-secondary" >Detail</md-button>
                         </md-list-item>
                         <md-divider ></md-divider>
