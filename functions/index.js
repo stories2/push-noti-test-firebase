@@ -87,7 +87,7 @@ const verifyAuthToken = function (request, response, next) {
             })
     }
     catch (exception) {
-        global.logManager.PrintLogMessage("index", "verifyAuthToken", "server crashed", global.defineManager.LOG_LEVEL_ERROR)
+        global.logManager.PrintLogMessage("index", "verifyAuthToken", "server crashed: " + JSON.stringify(exception), global.defineManager.LOG_LEVEL_ERROR)
         // tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
 
         // responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SERVER_ERROR, response)
