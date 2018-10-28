@@ -18,7 +18,7 @@
 
             <div ng-layout="row">
                 <md-toolbar class="md-hue-2" ng-controller="ToolbarController" ng-init="listenAuthStateChanged()">
-                    <div class="md-toolbar-tools">
+                    <div class="md-toolbar-tools" ng-controller="LoginController">
                         <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
                             <!--<md-icon md-svg-icon="img/icons/menu.svg"></md-icon>-->
                         </md-button>
@@ -82,6 +82,7 @@
     <script src="./assets/js/AppDefine.js"></script>
     <script src="./assets/js/AppService.js"></script>
     <script src="./assets/js/Controllers/Shared/ToolbarController.js"></script>
-    <script src="./assets/js/Controllers/Login/DashboardController.js"></script>
+    <script src="./assets/js/Controllers/Dashboard/DashboardController.js"></script>
+    <script src="./assets/js/Controllers/Dialog/LoginController.js"></script>
 </body>
 </html>
