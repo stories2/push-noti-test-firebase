@@ -20,6 +20,16 @@ app.controller("DashboardController", function ($scope, $http, $mdToast, $mdSide
             }
         });
     }
+
+    $scope.onBtnDetailClicked = function (statusDetail) {
+        ADSModuleService.printLogMessage("DashboardController", "onBtnDetailClicked", "show detail data: " + JSON.stringify(statusDetail), LOG_LEVEL_DEBUG)
+        ShowDetailDialog(statusDetail)
+    }
+    
+    $scope.onBtnRefreshClicked = function () {
+        ADSModuleService.printLogMessage("DashboardController", "onBtnRefreshClicked", "refresh deploy status", LOG_LEVEL_INFO)
+        LoadLatestDeployStatus()
+    }
     
     function LoadLatestDeployStatus() {
         ADSModuleService.printLogMessage("DashboardController", "LoadLatestDeployStatus", "load status db", LOG_LEVEL_INFO)
@@ -32,11 +42,6 @@ app.controller("DashboardController", function ($scope, $http, $mdToast, $mdSide
                 $scope.deployClientStatusDic = snapshot.val()
             })
         });
-    }
-    
-    $scope.onBtnDetailClicked = function (statusDetail) {
-        ADSModuleService.printLogMessage("DashboardController", "onBtnDetailClicked", "show detail data: " + JSON.stringify(statusDetail), LOG_LEVEL_DEBUG)
-        ShowDetailDialog(statusDetail)
     }
 
     function LoadDeployStatusCode() {

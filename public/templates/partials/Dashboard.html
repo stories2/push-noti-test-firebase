@@ -3,6 +3,13 @@
         <md-tab label="Deploy status">
             <md-content class="md-padding" layout="column">
 
+                <div layout="row">
+                    <md-list-item class="secondary-button-padding">
+                        <p>Refresh</p>
+                        <md-button class="md-secondary" ng-click="onBtnRefreshClicked()"><i class="fas fa-sync-alt"></i></md-button>
+                    </md-list-item>
+                </div>
+
                 <div layout="row" ng-repeat="(clientName, clientStatusList) in deployClientStatusDic">
                     <div flex>
                         <md-list-item class="secondary-button-padding">
