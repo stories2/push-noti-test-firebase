@@ -36,11 +36,12 @@ publicApp.post("/UpdateStatus/:targetName", function (request, response) {
         'success': false
     }
 
+    var dbManager = require('./Core/DBManager');
+
     global.logManager.PrintLogMessage("index", "UpdateStatus", "update status request accepted, from -> " + targetName,
         global.defineManager.LOG_LEVEL_DEBUG)
 
-    global.logManager.PrintLogMessage("index", "UpdateStatus", "received data: " + JSON.stringify(request.body),
-        global.defineManager.LOG_LEVEL_DEBUG)
+    dbManager.updateLatestDeployStatus(admin, targetName, request.body)
 
     responseMessage['success'] = true
 

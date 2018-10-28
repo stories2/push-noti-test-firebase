@@ -5,3 +5,4 @@ exports.LOG_LEVEL_WARN = 3
 exports.LOG_LEVEL_ERROR = 4
 
 exports.DB_PATH_SUBSCRIBER = '/Subscriber/'
+exports.DB_PATH_DEPLOY_STATUS = '/DeployStatus/'
