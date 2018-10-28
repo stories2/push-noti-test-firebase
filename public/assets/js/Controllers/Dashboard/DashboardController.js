@@ -30,6 +30,8 @@ app.controller("DashboardController", function ($scope, $http, $mdToast, $mdSide
     $scope.onBtnRefreshClicked = function () {
         ADSModuleService.printLogMessage("DashboardController", "onBtnRefreshClicked", "refresh deploy status", LOG_LEVEL_INFO)
         LoadLatestDeployStatus()
+
+        CheckAllDeployStatus()
     }
     
     function LoadLatestDeployStatus() {
@@ -57,6 +59,41 @@ app.controller("DashboardController", function ($scope, $http, $mdToast, $mdSide
                 $scope.deployClientStatusCodeDic = snapshot.val()
             })
         });
+    }
+
+    function CheckAllDeployStatus() {
+
+        ADSModuleService.printLogMessage("DashboardController", "CheckAllDeployStatus", "check all deploy server status", LOG_LEVEL_INFO)
+
+        firebase.database().ref(DB_PATH_DEPLOY_PROFILE).once('value').then(function(snapshot) {
+            ADSModuleService.printLogMessage("DashboardController", "CheckAllDeployStatus", "snapshot: " + JSON.stringify(snapshot.val()), LOG_LEVEL_DEBUG)
+            for(serverName in snapshot.val()) {
+
+                requestData = {
+                    "orderType": 2,
+                    "msg": "Check all deploy status",
+                    "callbackUrl": URL_CALLBACK + serverName,
+                    "pushRegisteredID": serverName
+                }
+
+                ADSModuleService.printLogMessage("DashboardController", "CheckAllDeployStatus", "send to " + serverName, LOG_LEVEL_DEBUG)
+
+                firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+                    // Send token to your backend via HTTPS
+                    // ...
+                    ADSModuleService.postReq(URL_PUSH_MSG_SEND,
+                        requestData,
+                        function (successData) {
+                            ADSModuleService.printLogMessage("DashboardController", "CheckAllDeployStatus", "successfully request push msg: " + JSON.stringify(successData), LOG_LEVEL_DEBUG)
+                        },
+                        function (error) {
+                            ADSModuleService.printLogMessage("DashboardController", "CheckAllDeployStatus", "cannot request push msg: " + JSON.stringify(error), LOG_LEVEL_ERROR)
+                        }, idToken)
+                })
+
+            }
+        })
+
     }
 
     function ShowDetailDialog(statusDetail) {
