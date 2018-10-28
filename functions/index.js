@@ -55,46 +55,48 @@ exports.public = functions.https.onRequest(publicApp);
  * For admin web service
  ************************************************************/
 
-// const verifyAuthToken = function (request, response, next) {
-//     try {
-//         token = request.get('Authorization')
-//         admin.auth().verifyIdToken(token)
-//             .then(function (decodedToken) {
-//                 global.logManager.PrintLogMessage("index", "verifyAuthToken", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-//                 request.user = decodedToken
-//                 admin.auth().getUser(decodedToken.uid)
-//                     .then(function (userRecord) {
-//                         global.logManager.PrintLogMessage("index", "verifyAuthToken", "we found user info", global.defineManager.LOG_LEVEL_DEBUG)
-//                         userRecordData = userRecord.toJSON()
-//                         userRecordDataStr = JSON.stringify(userRecordData)
-//                         request.userRecordData = userRecordData
-//                         global.logManager.PrintLogMessage("index", "verifyAuthToken", "user info decoded : " + userRecordDataStr, global.defineManager.LOG_LEVEL_INFO)
-//                         return next();
-//                     })
-//                     .catch(function (error) {
-//                         global.logManager.PrintLogMessage("index", "verifyAuthToken", "cannot verify user", global.defineManager.LOG_LEVEL_ERROR)
-//                         tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-//
-//                         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-//                     })
-//             })
-//             .catch(function (error) {
-//                 global.logManager.PrintLogMessage("index", "verifyAuthToken", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-//
-//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-//             })
-//     }
-//     catch (exception) {
-//         global.logManager.PrintLogMessage("index", "verifyAuthToken", "server crashed", global.defineManager.LOG_LEVEL_ERROR)
-//         tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-//
-//         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SERVER_ERROR, response)
-//     }
-// }
+const verifyAuthToken = function (request, response, next) {
+    try {
+        token = request.get('Authorization')
+        admin.auth().verifyIdToken(token)
+            .then(function (decodedToken) {
+                global.logManager.PrintLogMessage("index", "verifyAuthToken", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+                request.user = decodedToken
+                admin.auth().getUser(decodedToken.uid)
+                    .then(function (userRecord) {
+                        global.logManager.PrintLogMessage("index", "verifyAuthToken", "we found user info", global.defineManager.LOG_LEVEL_DEBUG)
+                        userRecordData = userRecord.toJSON()
+                        userRecordDataStr = JSON.stringify(userRecordData)
+                        request.userRecordData = userRecordData
+                        global.logManager.PrintLogMessage("index", "verifyAuthToken", "user info decoded : " + userRecordDataStr, global.defineManager.LOG_LEVEL_INFO)
+                        return next();
+                    })
+                    .catch(function (error) {
+                        global.logManager.PrintLogMessage("index", "verifyAuthToken", "cannot verify user", global.defineManager.LOG_LEVEL_ERROR)
+                        // tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+                        response.status(401).send();
+                    })
+            })
+            .catch(function (error) {
+                global.logManager.PrintLogMessage("index", "verifyAuthToken", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+                // tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+                // responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+                response.status(401).send();
+            })
+    }
+    catch (exception) {
+        global.logManager.PrintLogMessage("index", "verifyAuthToken", "server crashed", global.defineManager.LOG_LEVEL_ERROR)
+        // tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+        // responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SERVER_ERROR, response)
+        response.status(500).send();
+    }
+}
 
 privateApp.use(cors)
-// privateV2.use(verifyAuthToken)
+privateApp.use(verifyAuthToken)
 
 privateApp.post("/SendPush", function (request, response) {
     targetName = request.body["pushRegisteredID"]
