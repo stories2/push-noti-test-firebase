@@ -17,4 +17,12 @@ app.controller("LoginController", function ($scope, $http, $mdToast, $mdSidenav,
             }
         });
     }
+    
+    $scope.signOutUser = function () {
+        ADSModuleService.printLogMessage("LoginController", "signOutUser", "start process sign out user", LOG_LEVEL_INFO)
+    }
+    
+    $scope.signInUser = function () {
+        ADSModuleService.printLogMessage("LoginController", "signInUser", "start process sign in user", LOG_LEVEL_INFO)
+    }
 });
