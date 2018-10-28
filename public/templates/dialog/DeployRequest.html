@@ -1,0 +1,75 @@
+<md-dialog aria-label="Make new deploy request" flex="80">
+    <form ng-cloak name="deployRequestForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Make new deploy request</h2>
+                <span flex></span>
+                <!--<md-button class="md-icon-button" ng-click="cancel()">-->
+                <!--<md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>-->
+                <!--</md-button>-->
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content layout="column" layout-padding>
+            <div layout="row">
+                <md-input-container flex="50">
+                    <label>Server</label>
+                    <md-select ng-model="" required>
+                        <md-option ng-repeat="" ng-value="">
+                            {{}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Profile</label>
+                    <md-select ng-model="" required>
+                        <md-option ng-repeat="" ng-value="">
+                            {{}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container flex>
+                    <label>Order</label>
+                    <md-select ng-model="" required>
+                        <md-option ng-repeat="" ng-value="">
+                            {{}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container flex>
+                    <label>Download url</label>
+                    <input ng-model="">
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container flex>
+                    <label>Message</label>
+                    <input ng-model="">
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container flex>
+                    <label>Version</label>
+                    <input ng-model="">
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <!--<md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>-->
+            <!--More on Wikipedia-->
+            <!--</md-button>-->
+            <span flex></span>
+            <md-button ng-click="answer('not useful')">
+                Cancel
+            </md-button>
+            <md-button ng-click="answer('useful')" ng-disabled="deployRequestForm.$invalid">
+                Submit
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
