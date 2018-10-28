@@ -13,8 +13,8 @@
 </head>
 <body>
 
-    <div ng-app="ADSModule">
-        <div ng-layout="column">
+    <div ng-app="ADSModule" layout-fill>
+        <div ng-layout="column" layout-fill>
 
             <div ng-layout="row">
                 <md-toolbar class="md-hue-2" ng-controller="ToolbarController" ng-init="listenAuthStateChanged()">
@@ -57,7 +57,7 @@
                 </div>
             </div>
 
-            <md-content flex style="height: calc(100% - 64px);" ng-view layout="column" layout-padding>
+            <md-content style="height: calc(100% - 64px);" ng-view layout="column" layout-padding>
 
             </md-content>
         </div>
