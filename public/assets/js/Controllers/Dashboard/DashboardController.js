@@ -2,6 +2,7 @@ app.controller("DashboardController", function ($scope, $http, $mdToast, $mdSide
 
     $scope.deployClientStatusDic = {}
     $scope.deployClientStatusCodeDic = {}
+    $scope.lastRefreshTime = ""
 
     ADSModuleService.printLogMessage("DashboardController", "DashboardController", "init", LOG_LEVEL_INFO);
 
@@ -39,6 +40,7 @@ app.controller("DashboardController", function ($scope, $http, $mdToast, $mdSide
             ADSModuleService.printLogMessage("DashboardController", "LoadLatestDeployStatus", "status dic: " + JSON.stringify(snapshot.val()), LOG_LEVEL_DEBUG)
 
             $scope.$apply(function () {
+                $scope.lastRefreshTime = new Date().toISOString()
                 $scope.deployClientStatusDic = snapshot.val()
             })
         });
