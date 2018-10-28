@@ -10,21 +10,21 @@
             </div>
         </md-toolbar>
 
-        <md-dialog-content layout="column" layout-padding>
+        <md-dialog-content layout="column" layout-padding ng-init="onInit()">
             <div layout="row">
                 <md-input-container flex="50">
                     <label>Server</label>
-                    <md-select ng-model="" required>
-                        <md-option ng-repeat="" ng-value="">
-                            {{}}
+                    <md-select ng-model="deployRequest.pushRegisteredID" required>
+                        <md-option ng-repeat="(serverName, deployProfile) in profileList" ng-value="serverName">
+                            {{ serverName }}
                         </md-option>
                     </md-select>
                 </md-input-container>
                 <md-input-container flex>
                     <label>Profile</label>
-                    <md-select ng-model="" required>
-                        <md-option ng-repeat="" ng-value="">
-                            {{}}
+                    <md-select ng-model="deployRequest.updateTargetPath" required>
+                        <md-option ng-repeat="(key, profileData) in profileList[deployRequest.pushRegisteredID]" ng-value="profileData.updateTargetPath">
+                            {{ key }}
                         </md-option>
                     </md-select>
                 </md-input-container>
@@ -32,9 +32,9 @@
             <div layout="row">
                 <md-input-container flex>
                     <label>Order</label>
-                    <md-select ng-model="" required>
-                        <md-option ng-repeat="" ng-value="">
-                            {{}}
+                    <md-select ng-model="deployRequest.orderType" required>
+                        <md-option ng-repeat="(key, desc) in orderType" ng-value="key">
+                            {{ desc }}
                         </md-option>
                     </md-select>
                 </md-input-container>
@@ -42,19 +42,19 @@
             <div layout="row">
                 <md-input-container flex>
                     <label>Download url</label>
-                    <input ng-model="">
+                    <input ng-model="deployRequest.downloadUrl">
                 </md-input-container>
             </div>
             <div layout="row">
                 <md-input-container flex>
                     <label>Message</label>
-                    <input ng-model="">
+                    <input ng-model="deployRequest.msg">
                 </md-input-container>
             </div>
             <div layout="row">
                 <md-input-container flex>
                     <label>Version</label>
-                    <input ng-model="">
+                    <input ng-model="deployRequest.version">
                 </md-input-container>
             </div>
         </md-dialog-content>

@@ -27,6 +27,16 @@ app.controller("DeployController", function ($scope, $http, $mdToast, $mdDialog,
 
     function DialogController($scope, $mdDialog) {
 
+        $scope.deployRequest = {}
+        $scope.profileList = {}
+        $scope.orderType = {}
+
+        $scope.onInit = function() {
+            ADSModuleService.printLogMessage("DialogController", "onInit", "init", LOG_LEVEL_INFO)
+            GetDeployProfileList()
+            GetOrderTypeList()
+        }
+
         $scope.hide = function() {
             $mdDialog.hide();
         };
@@ -36,7 +46,34 @@ app.controller("DeployController", function ($scope, $http, $mdToast, $mdDialog,
         };
 
         $scope.answer = function(answer) {
+            $scope.deployRequest["callbackUrl"] = URL_CALLBACK + $scope.deployRequest.pushRegisteredID
+            $scope.deployRequest["fileType"] = "zip"
+
+            ADSModuleService.printLogMessage("DialogController", "answer", "deploy request data: " + JSON.stringify($scope.deployRequest), LOG_LEVEL_DEBUG)
+
             $mdDialog.hide(answer);
         };
+
+        function GetDeployProfileList() {
+            firebase.database().ref(DB_PATH_DEPLOY_PROFILE).once('value').then(function(snapshot) {
+
+                ADSModuleService.printLogMessage("DialogController", "GetDeployProfileList", "deploy profile dic : " + JSON.stringify(snapshot.val()), LOG_LEVEL_DEBUG)
+
+                $scope.$apply(function () {
+                    $scope.profileList = snapshot.val()
+                })
+            });
+        }
+
+        function GetOrderTypeList() {
+            firebase.database().ref(DB_PATH_DEPLOY_ORDER_TYPE).once('value').then(function(snapshot) {
+
+                ADSModuleService.printLogMessage("DialogController", "GetOrderTypeList", "order type dic : " + JSON.stringify(snapshot.val()), LOG_LEVEL_DEBUG)
+
+                $scope.$apply(function () {
+                    $scope.orderType = snapshot.val()
+                })
+            });
+        }
     }
 })
