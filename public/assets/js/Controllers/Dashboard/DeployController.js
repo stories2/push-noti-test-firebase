@@ -38,14 +38,26 @@ app.controller("DeployController", function ($scope, $http, $mdToast, $mdDialog,
                 requestData,
                 function (successData) {
                     ADSModuleService.printLogMessage("DeployController", "SendPushMsgRequest", "successfully request push msg: " + JSON.stringify(successData), LOG_LEVEL_DEBUG)
+                    FeedbackRequestPushMsg(FEEDBACK_REQUEST_PUSH_MSG_SUCCESS)
                 },
                 function (error) {
                     ADSModuleService.printLogMessage("DeployController", "SendPushMsgRequest", "cannot request push msg: " + JSON.stringify(error), LOG_LEVEL_ERROR)
+                    FeedbackRequestPushMsg(FEEDBACK_REQUEST_PUSH_MSG_FAILED)
                 }, idToken)
         }).catch(function(error) {
             // Handle error
             ADSModuleService.printLogMessage("DeployController", "SendPushMsgRequest", "cannot generate token: " + JSON.stringify(error), LOG_LEVEL_ERROR)
+            FeedbackRequestPushMsg(FEEDBACK_GENERATE_TOKEN_FAILED)
         });
+    }
+
+    function FeedbackRequestPushMsg(result) {
+        $mdToast.show(
+            $mdToast.simple()
+                .textContent(result)
+                .position("top right" )
+                .hideDelay(3000)
+        );
     }
 
     function DialogController($scope, $mdDialog) {
